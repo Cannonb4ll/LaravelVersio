@@ -10,7 +10,9 @@ class Domain extends LaravelVersio
 
     public function get($domain = null)
     {
-        $info = $this->setGetUrl('domains/' . $domain)->call();
+        $info = $this
+            ->setGetUrl('domains/' . $domain)
+            ->call();
 
         return array_get($info, $this->arrayKey);
     }
@@ -35,9 +37,35 @@ class Domain extends LaravelVersio
             ->setGetUrl('domains/' . $domain)
             ->addQuery([
                 'show_dns_records' => 'true'
-            ])->call();
+            ])
+            ->call();
 
         return array_get($info, $this->arrayKey . '.dns_records');
+    }
+
+    public function getRedirects($domain = null)
+    {
+        $info = $this
+            ->setGetUrl('domains/' . $domain)
+            ->addQuery([
+                'show_dns_records' => 'true',
+                'show_domain_records' => 'true'
+            ])
+            ->call();
+
+        return array_get($info, $this->arrayKey . '.dns_redirections');
+    }
+
+    public function getMovingCode($domain)
+    {
+        $data = $this
+            ->setGetUrl('domains/' . $domain)
+            ->addQuery([
+                'show_epp_code' => 'true'
+            ])
+            ->call();
+
+        return $data;
     }
 
     public function getNameservers($domain = null)
@@ -51,11 +79,12 @@ class Domain extends LaravelVersio
 
     public function register($domain, $contactId = null, $years = 1, $ns = [])
     {
-        return $this->setParams([
-            'ns' => count($ns) ? $ns : null,
-            'years' => $years,
-            'contact_id' => $contactId,
-        ])
+        return $this
+            ->setParams([
+                'ns' => count($ns) ? $ns : null,
+                'years' => $years,
+                'contact_id' => $contactId,
+            ])
             ->setPostUrl('domains/' . $domain)
             ->call();
     }
@@ -76,7 +105,8 @@ class Domain extends LaravelVersio
             return;
         }
 
-        return $this->setParams($data)
+        return $this
+            ->setParams($data)
             ->setPostUrl('domains/' . $domain . '/update')
             ->call();
     }

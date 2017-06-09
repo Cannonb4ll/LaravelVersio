@@ -64,7 +64,7 @@ class LaravelVersio
     {
         $this->method = 'GET';
 
-        $this->callableUrl = $this->baseUrl . $url . $this->query;
+        $this->callableUrl = $this->baseUrl . $url;
 
         return $this;
     }
@@ -73,7 +73,7 @@ class LaravelVersio
     {
         $this->method = 'POST';
 
-        $this->callableUrl = $this->baseUrl . $url . $this->query;
+        $this->callableUrl = $this->baseUrl . $url;
 
         return $this;
     }
