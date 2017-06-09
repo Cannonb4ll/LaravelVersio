@@ -48,6 +48,8 @@ $versio = new LaravelVersio;
     ->renew($domain, (int) $years) // renew a domain
     ->update($domain, $data) // update a domain
     ->available($domain) // check if a domain is available
+    ->setDnsManagement($domain) // set domain on DNS management
+    ->setNameServerManagement($domain) // set domain on nameserver management
 ->contacts()
     ->get((int) $contactId) // get a contact
     ->create(array $data) // create a contact

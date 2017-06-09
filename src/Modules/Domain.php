@@ -15,6 +15,20 @@ class Domain extends LaravelVersio
         return array_get($info, $this->arrayKey);
     }
 
+    public function setNameServerManagement($domain)
+    {
+        return $this->update($domain, [
+            'dns_management' => false
+        ]);
+    }
+
+    public function setDnsManagement($domain)
+    {
+        return $this->update($domain, [
+            'dns_management' => true
+        ]);
+    }
+
     public function getDnsRecords($domain = null)
     {
         $info = $this
