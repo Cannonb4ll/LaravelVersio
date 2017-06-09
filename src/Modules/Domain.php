@@ -10,34 +10,68 @@ class Domain extends LaravelVersio
 
     public function get($domain = null)
     {
-        $this->setUrl('domains/' . $domain);
+        $info = $this->setGetUrl('domains/' . $domain)->call();
 
-        return array_get($this->call(), $this->arrayKey);
+        return array_get($info, $this->arrayKey);
     }
 
     public function getDnsRecords($domain = null)
     {
-        $this->addQuery([
-            'show_dns_records' => 'true'
-        ]);
+        $info = $this
+            ->setGetUrl('domains/' . $domain)
+            ->addQuery([
+                'show_dns_records' => 'true'
+            ])->call();
 
-        $this->setUrl('domains/' . $domain);
-
-        return array_get($this->call(), $this->arrayKey . '.dns_records');
+        return array_get($info, $this->arrayKey . '.dns_records');
     }
 
     public function getNameservers($domain = null)
     {
-        $this->setUrl('domains/' . $domain);
+        $info = $this
+            ->setGetUrl('domains/' . $domain)
+            ->call();
 
-        return array_get($this->call(), $this->arrayKey . '.ns');
+        return array_get($info, $this->arrayKey . '.ns');
+    }
+
+    public function register($domain, $contactId = null, $years = 1, $ns = [])
+    {
+        return $this->setParams([
+            'ns' => count($ns) ? $ns : null,
+            'years' => $years,
+            'contact_id' => $contactId,
+        ])
+            ->setPostUrl('domains/' . $domain)
+            ->call();
+    }
+
+    public function renew($domain, $years = 1)
+    {
+        return $this
+            ->setParams([
+                'years' => $years
+            ])
+            ->setPostUrl('domains/' . $domain . '/renew')
+            ->call();
+    }
+
+    public function update($domain, array $data = [])
+    {
+        if (!count($data)) {
+            return;
+        }
+
+        return $this->setParams($data)
+            ->setPostUrl('domains/' . $domain . '/update')
+            ->call();
     }
 
     public function available($domain = null)
     {
-        $this->setUrl('domains/' . $domain . '/availability');
-
-        $info = $this->call();
+        $info = $this
+            ->setGetUrl('domains/' . $domain . '/availability')
+            ->call();
 
         if ($info && is_array($info)) {
             return $info[0];

@@ -3,8 +3,9 @@
 namespace LaravelVersio;
 
 use GuzzleHttp\Client;
-use LaravelVersio\Modules\Domain;
 use LaravelVersio\Modules\Tld;
+use LaravelVersio\Modules\Domain;
+use LaravelVersio\Modules\Contact;
 
 class LaravelVersio
 {
@@ -13,6 +14,8 @@ class LaravelVersio
     protected $url;
     protected $query;
     protected $callableUrl;
+    protected $method = 'GET';
+    protected $params = [];
 
     public function __construct()
     {
@@ -37,16 +40,19 @@ class LaravelVersio
         return new Tld;
     }
 
+    public function contacts()
+    {
+        return new Contact;
+    }
+
     protected function call()
     {
-        $request = $this->client->request('GET', $this->callableUrl, [
+        $request = $this->client->request($this->method, $this->callableUrl . $this->query, [
             'auth' => [
                 config('versio.email'),
                 config('versio.password')
             ],
-            'form_params' => [
-
-            ]
+            'json' => $this->params
         ]);
 
         return json_decode($request
@@ -54,14 +60,36 @@ class LaravelVersio
             ->getContents(), true);
     }
 
-    protected function setUrl($url = null)
+    protected function setGetUrl($url = null)
     {
+        $this->method = 'GET';
+
         $this->callableUrl = $this->baseUrl . $url . $this->query;
+
+        return $this;
+    }
+
+    public function setPostUrl($url)
+    {
+        $this->method = 'POST';
+
+        $this->callableUrl = $this->baseUrl . $url . $this->query;
+
+        return $this;
     }
 
     protected function addQuery(array $array)
     {
         $this->query = '?' . http_build_query($array);
+
+        return $this;
+    }
+
+    protected function setParams(array $array)
+    {
+        $this->params = $array;
+
+        return $this;
     }
 }
 
