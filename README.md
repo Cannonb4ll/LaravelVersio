@@ -32,6 +32,33 @@ VERSIO_PASSWORD=
 VERSIO_TEST=
 ```
 
+Next you can use it like this:
+
+```php
+$versio = new LaravelVersio;
+```
+
+`$versio` will now have the following modules available:
+
+```php
+->domains()
+    ->get($domain) // domain info
+    ->getDnsRecords($domain) // domain dns records
+    ->register($domain, (int) $contactId, (int) $years, array $nameservers) // register domain
+    ->renew($domain, (int) $years) // renew a domain
+    ->update($domain, $data) // update a domain
+    ->available($domain) // check if a domain is available
+->contacts()
+    ->get((int) $contactId) // get a contact
+    ->create(array $data) // create a contact
+->tlds()
+    ->prices() // overview for prices
+    ->info($tld) // tld info
+```
+
+You will have to get the API documentation from VERSIO to see what you can fill in the arrays:
+https://www.versio.nl/RESTapidoc/
+
 ## License
 
 The laravel versio package is open source software licensed under the [license MIT](http://opensource.org/licenses/MIT)
