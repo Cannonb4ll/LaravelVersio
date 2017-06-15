@@ -48,7 +48,6 @@ class Domain extends LaravelVersio
         $info = $this
             ->setGetUrl('domains/' . $domain)
             ->addQuery([
-                'show_dns_records' => 'true',
                 'show_domain_records' => 'true'
             ])
             ->call();
@@ -65,7 +64,7 @@ class Domain extends LaravelVersio
             ])
             ->call();
 
-        return $data;
+        return array_get($data, $this->arrayKey . '.epp_code');
     }
 
     public function getNameservers($domain = null)
