@@ -61,6 +61,24 @@ $versio = new LaravelVersio;
     ->info($tld) // tld info
 ```
 
+## Example: 
+
+```php
+$versio = new Versio;
+ 
+$domain = $versio->domains()->get('google.com');
+ 
+// $domain contains data now
+```
+
+## Another example:
+
+```php
+$contact = (new Versio)->contacts()->get(55);
+ 
+// $contact contains contact data now
+```
+
 You will have to get the API documentation from VERSIO to see what you can fill in the arrays:
 https://www.versio.nl/RESTapidoc/
 
