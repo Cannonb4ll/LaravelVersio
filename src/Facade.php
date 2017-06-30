@@ -1,4 +1,6 @@
-<?php namespace LaravelVersio;
+<?php
+
+namespace LaravelVersio;
 
 class Facade extends \Illuminate\Support\Facades\Facade
 {

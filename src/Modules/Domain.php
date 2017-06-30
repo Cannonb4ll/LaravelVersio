@@ -8,6 +8,16 @@ class Domain extends LaravelVersio
 {
     protected $arrayKey = 'domainInfo';
 
+    public function lists()
+    {
+        $info = $this
+            ->setGetUrl('domains')
+            ->call();
+
+        return array_get($info, 'DomainsList');
+    }
+
+
     public function get($domain = null)
     {
         $info = $this

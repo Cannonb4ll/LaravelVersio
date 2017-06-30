@@ -3,6 +3,7 @@
 namespace LaravelVersio;
 
 use GuzzleHttp\Client;
+use LaravelVersio\Modules\DnsTemplate;
 use LaravelVersio\Modules\Tld;
 use LaravelVersio\Modules\Domain;
 use LaravelVersio\Modules\Contact;
@@ -45,6 +46,11 @@ class LaravelVersio
         return new Contact;
     }
 
+    public function dnsTemplate()
+    {
+        return new DnsTemplate;
+    }
+
     protected function call()
     {
         $request = $this->client->request($this->method, $this->callableUrl . $this->query, [
@@ -72,6 +78,15 @@ class LaravelVersio
     public function setPostUrl($url)
     {
         $this->method = 'POST';
+
+        $this->callableUrl = $this->baseUrl . $url;
+
+        return $this;
+    }
+
+    public function setDeleteUrl($url)
+    {
+        $this->method = 'DELETE';
 
         $this->callableUrl = $this->baseUrl . $url;
 

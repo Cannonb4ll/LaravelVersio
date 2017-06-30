@@ -42,6 +42,7 @@ $versio = new LaravelVersio;
 
 ```php
 ->domains()
+    ->lists() // overview of all domains
     ->get($domain) // domain info
     ->getDnsRecords($domain) // domain dns records
     ->register($domain, (int) $contactId, (int) $years, array $nameservers) // register domain
@@ -53,6 +54,8 @@ $versio = new LaravelVersio;
 ->contacts()
     ->get((int) $contactId) // get a contact
     ->create(array $data) // create a contact
+    ->delete((int) $contactId) // delete a contact
+    ->lists() // overview of all contacts
 ->tlds()
     ->prices() // overview for prices
     ->info($tld) // tld info

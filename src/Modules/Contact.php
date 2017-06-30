@@ -6,6 +6,15 @@ use LaravelVersio\LaravelVersio;
 
 class Contact extends LaravelVersio
 {
+    public function lists()
+    {
+        $info = $this
+            ->setGetUrl('contacts')
+            ->call();
+
+        return array_get($info, 'ContactList');
+    }
+
     public function get($contactId)
     {
         $info = $this
@@ -25,5 +34,14 @@ class Contact extends LaravelVersio
             ->setParams($data)
             ->setPostUrl('contacts')
             ->call();
+    }
+
+    public function delete($contactId)
+    {
+        $info = $this
+            ->setDeleteUrl('contacts/' . $contactId)
+            ->call();
+
+        return $info;
     }
 }
