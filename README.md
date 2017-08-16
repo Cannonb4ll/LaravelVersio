@@ -59,6 +59,12 @@ $versio = new LaravelVersio;
 ->tlds()
     ->prices() // overview for prices
     ->info($tld) // tld info
+->dnsTemplate()    
+    ->lists() // overview of all dns templates
+    ->get($dnsTemplateId) // get template info
+    ->delete($dnsTemplateId) // delete template
+    ->update($dnsTemplateId, array $data) // update a template
+    ->create(array $data) // create a template
 ```
 
 ## Example: 
