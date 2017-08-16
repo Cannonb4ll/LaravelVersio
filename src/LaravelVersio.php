@@ -3,11 +3,16 @@
 namespace LaravelVersio;
 
 use GuzzleHttp\Client;
-use LaravelVersio\Modules\DnsTemplate;
 use LaravelVersio\Modules\Tld;
 use LaravelVersio\Modules\Domain;
 use LaravelVersio\Modules\Contact;
+use LaravelVersio\Modules\Webhosting;
+use LaravelVersio\Modules\DnsTemplate;
 
+/**
+ * @property \GuzzleHttp\Client client
+ * @property string             baseUrl
+ */
 class LaravelVersio
 {
     const VERSION = 'v1';
@@ -49,6 +54,11 @@ class LaravelVersio
     public function dnsTemplate()
     {
         return new DnsTemplate;
+    }
+
+    public function webhosting()
+    {
+        return new Webhosting;
     }
 
     protected function call()
