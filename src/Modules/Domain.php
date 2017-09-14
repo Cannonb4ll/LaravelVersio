@@ -126,8 +126,8 @@ class Domain extends LaravelVersio
             ->setGetUrl('domains/' . $domain . '/availability')
             ->call();
 
-        if ($info && is_array($info)) {
-            return $info[0];
+        if(!$info){
+            return;
         }
 
         return $info;
